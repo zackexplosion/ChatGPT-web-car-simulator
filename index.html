@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>車輛模擬器</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // 獲取 canvas 元素及其上下文
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // 設定車輛初始位置及速度
+        let x = 250;
+        let y = 250;
+        let dx = 0;
+        let dy = 0;
+
+        // 畫出車輛
+        function drawCar() {
+          ctx.beginPath();
+          ctx.rect(x, y, 50, 30);
+          ctx.fillStyle = "blue";
+          ctx.fill();
+          ctx.closePath();
+        }
+
+        // 移動車輛
+        function moveCar() {
+          // 計算新的位置
+          x += dx;
+          y += dy;
+
+          // 畫出新的位置
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          drawCar();
+        }
+
+        // 使用者按下按鍵時觸發
+        document.addEventListener("keydown", function(event) {
+          // 判斷按下的是哪個鍵
+          switch (event.key) {
+            case "ArrowUp":
+              dy = -2;
+              break;
+            case "ArrowDown":
+              dy = 2;
+              break;
+            case "ArrowLeft":
+              dx = -2;
+              break;
+            case "ArrowRight":
+              dx = 2;
+              break;
+          }
+        });
+
+        // 使用者放開按鍵時觸發
+        document.addEventListener("keyup", function(event) {
+          // 判斷放開的是哪個鍵
+          switch (event.key) {
+            case "ArrowUp":
+            case "ArrowDown":
+              dy = 0;
+              break;
+            case "ArrowLeft":
+            case "ArrowRight":
+              dx = 0;
+              break;
+          }
+        });
+
+        // 每 10 毫秒更新一次畫面
+        setInterval(moveCar, 10);
+      });
+    </script>
+  </body>
+</html>
